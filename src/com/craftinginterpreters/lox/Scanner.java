@@ -89,6 +89,21 @@ public class Scanner {
                     while (peek() != '\n' && !isAtEnd()) {
                         advance();
                     }
+                } else if (match('*')) {
+                    // adds support for multi-line comments like in C
+                    while (true) {
+                        if (isAtEnd()) {
+                            break;
+                        }
+                        if (peek() == '*' && peekNext() == '/') {
+                            advance();
+                            advance();
+                            break;
+                        } else if (peek() == '\n') {
+                            line++;
+                        }
+                        advance();
+                    }
                 } else {
                     addToken(SLASH);
                 }
