@@ -52,11 +52,23 @@ class Interpreter implements Expr.Visitor<Object> {
                 return (double)left - (double)right;
             case SLASH:
                 checkNumberOperands(expr.operator, left, right);
+                if ((Double)right == 0) {
+                    throw new RuntimeError(expr.operator, "Dividing by zero is not allowed :(");
+                }
                 return (double)left / (double)right;
             case STAR:
                 checkNumberOperands(expr.operator, left, right);
                 return (double)left * (double)right;
             case PLUS:
+                //fix this sh*t
+                /*if (left instanceof String && right instanceof Double) {
+                    String r = right.toString();
+                    System.out.println(r);
+                    return (String)left + (String)r;
+                }
+                if (left instanceof Double && right instanceof String) {
+                    return (String) Double.toString((double) left) + (String) right;
+                }*/
                 if (left instanceof Double && right instanceof Double) {
                     return (double)left + (double)right;
                 }
